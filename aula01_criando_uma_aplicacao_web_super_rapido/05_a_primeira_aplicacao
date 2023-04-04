@@ -1,1 +1,16 @@
 Criamos o 'jogoteca.py' e importamos o flask
+
+from flask import Flask
+
+# Variável onde será colocada a aplicação
+app = Flask(__name__)  # __name__ faz uma referência ao próprio arquivo, ele garante que vai rodar a app
+
+# Criando uma rota
+@app.route('/inicio')
+def ola():
+    return '<h1>Hello World!</h1>'  # Não estamos lidando só com Python, vamos fazer um site, então temos que usar HTML
+
+app.run()  # ao rodar o código o terminal nos mostra o caminho que vamos usar para rodar
+# se formos nesse caminho recebemos um '404 not found', isso porque criamos a plicação dentro de uma rota '/inicio'
+# então para rodarmos usamos http://127.0.0.1:5000/inicio
+
