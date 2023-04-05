@@ -1,0 +1,23 @@
+utilizar classes para organizar melhor o projeto
+
+class Jogo:
+    def __init__(self, nome, categoria, console):
+        self.nome = nome
+        self.categoria = categoria
+        self.console = console
+
+
+@app.route('/inicio')
+def ola():
+    jogo1 = Jogo('Dark Souls', 'RPG de ação', 'Playstation 3')
+    jogo2 = Jogo('Donkey Kong', 'Plataforma', 'Nintendo')
+    jogo3 = Jogo('Red Dead Redemption', 'Ação e Aventura', 'Xbox 360')
+
+    lista = [jogo1, jogo2, jogo3]
+    return render_template('lista.html',
+                           titulo='Jogos',
+                           jogos=lista)
+
+
+# Dessa forma, sem alterar no html, está imprimindo o endereço de memória das variáveis
+# arrumado na próxima aula

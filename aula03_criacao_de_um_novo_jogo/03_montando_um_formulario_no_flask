@@ -1,0 +1,5 @@
+Na última aula criamos uma nova rota para add mais jogos na lista
+Deu certo, mas ainda não está adicionando o jogo e outro problema é que a url está se alterando para exemplo:
+                           'http://127.0.0.1:5000/novo?nome=The+Witcher+3&categoria=Aventura&console=Windows'
+
+#

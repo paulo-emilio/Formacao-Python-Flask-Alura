@@ -1,0 +1,19 @@
+<th>{{ jogo }}</th>
+# Dessa forma, sem alterar no html, está imprimindo o endereço de memória das variáveis
+# para imprimir o nome temos que chamar a variável self.nome:
+    <th>{{ jogo.nome }}</th>
+
+# Colocando todos as infos:
+                <tr>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Console</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for jogo in jogos %}
+                <tr>
+                    <th>{{ jogo.nome }}</th>
+                    <th>{{ jogo.categoria }}</th>
+                    <th>{{ jogo.console }}</th>
+

@@ -1,0 +1,13 @@
+Para add um elemento precisaremos de uma nova rota, então criamos um novo html 'novo.html'
+
+* criamos 'novo.html' dentro de 'template' e criamos o código nele
+
+* em 'jogoteca.py' criamos a nova rota:
+'''
+@app.route('/novo')
+def novo():
+    return render_template('novo.html',
+                           titulo='Novo Jogo')
+'''
+# Deu certo, mas ainda não esta adicionando o jogo e outro problema é que a url está se alterando para exemplo:
+                                   'http://127.0.0.1:5000/novo?nome=The+Witcher+3&categoria=Aventura&console=Windows'
