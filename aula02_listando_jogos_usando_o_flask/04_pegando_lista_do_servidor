@@ -1,0 +1,22 @@
+variável list() para nome de jogos
+
+.py:
+
+'''
+def ola():
+    lista = ['Dark Souls', 'Donkey Kong', 'Red Dead Redemption']
+    return render_template('lista.html',
+                           titulo='Jogos',
+                           jogos=lista)
+'''
+
+.html:
+'''
+            <tbody>
+                {% for jogo in jogos %}
+                <tr>
+                    <th>{{ jogo }}</th>
+                </tr>
+                {% endfor %}
+            </tbody>
+'''

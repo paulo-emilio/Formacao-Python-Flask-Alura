@@ -1,0 +1,56 @@
+Criando uma página html para ligar com a 'jogoteca.py'
+
+Criamos a pasta templates (nome padrão)
+    criamos lista.html:
+        '''<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Jogoteca</title>
+        </head>
+        <body>
+            <div class="container">
+                <div class="page-header">
+                    <h1>Jogoteca</h1>
+                </div>
+                <table class="table table-striped table-responsive table-bordered">
+                    <thead class="thead-default">
+                        <tr>
+                            <th>Nome</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>God of War</th>
+                        </tr>
+                        <tr>
+                            <th>Skyrim</th>
+                        </tr>
+                        <tr>
+                            <th>Valorant</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </body>
+        </html>'''
+
+Ligando com jogoteca.py:
+importamos o 'rander_template'
+    from flask import Flask, render_template
+
+'''from flask import Flask, render_template
+
+# Variável onde será colocada a aplicação
+app = Flask(__name__)  # __name__ faz uma referência ao próprio arquivo, ele garante que vai rodar a aplicação
+
+
+# Criando uma rota
+@app.route('/inicio')
+def ola():
+    return render_template('lista.html')  # render_template já sabe que está na pasta 'templates'
+
+
+app.run(host='0.0.0.0', port=8080)  # para rodar na porta 8080 e externamente'''
+

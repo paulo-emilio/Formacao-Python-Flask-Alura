@@ -1,14 +1,16 @@
-from flask import Flask
+from flask import Flask, render_template
 
 # Variável onde será colocada a aplicação
-app = Flask(__name__)  # __name__ faz uma referência ao próprio arquivo, ele garante que vai rodar a app
+app = Flask(__name__)  # __name__ faz uma referência ao próprio arquivo, ele garante que vai rodar a aplicação
+
 
 # Criando uma rota
 @app.route('/inicio')
 def ola():
-    return '<h1>Hello World!</h1>'  # Não estamos lidando só com Python, vamos fazer um site, então temos que usar HTML
+    lista = ['Dark Souls', 'Donkey Kong', 'Red Dead Redemption']
+    return render_template('lista.html',
+                           titulo='Jogos',
+                           jogos=lista)
 
-app.run()  # ao rodar o código o terminal nos mostra o caminho que vamos usar para rodar
-# se formos nesse caminho recebemos um '404 not found', isso porque criamos a plicação dentro de uma rota '/inicio'
-# então para rodarmos usamos http://127.0.0.1:5000/inicio
 
+app.run(host='0.0.0.0', port=8080)

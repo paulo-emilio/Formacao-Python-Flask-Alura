@@ -1,0 +1,9 @@
+Criando uma variável no .html, para ser alterada através do .py
+
+html:
+<h1>{{ titulo }}</h1>  # variável entre dupla chaves definida no 'jogoteca.py'
+
+py:
+@app.route('/inicio')
+def ola():
+    return render_template('lista.html', titulo='Jogos')  # 'titulo=' variável usada no lista.html
