@@ -2,4 +2,44 @@ Na última aula criamos uma nova rota para add mais jogos na lista
 Deu certo, mas ainda não está adicionando o jogo e outro problema é que a url está se alterando para exemplo:
                            'http://127.0.0.1:5000/novo?nome=The+Witcher+3&categoria=Aventura&console=Windows'
 
-#
+# Isso acontece por que está configurado por padrão o método 'get' e nós queremos o 'post'
+    para passar as informações para o servidor e adicionar um novo jogo
+
+# Em novo.html alteramos o método do <form> dessa forma:
+    <form action="/criar" method="post">
+    assim ao clicarmos em Salvar: <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+    no site, ele faz um post, enviando para a página '/criar' que vamos criar agora
+
+# Criamos a rota /criar e importamos o request
+    para que essa nova página pegue as informações, usamos o request e usamos as variáveis do novo.html:
+    '''
+    <input type="text" id="nome" name="nome" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="categoria">Categoria</label>
+            <input type="text" id="categoria" name="categoria" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="console">Console</label>
+            <input type="text" id="console" name="console" class="form-control">
+    '''
+    pegamos as variáveis 'name' -> name="nome" ; name="categoria" ; name="console"
+    que é a referência que o request usa para capturar as informações
+
+# Rota criada:
+# como o '/novo' já está mandando as informações, só precisamos pegá-las, usamos o 'request.form' para isso
+    e entre colchetes o nome que está na variável 'name' que queremos pegar
+    depois instanciamos em 'Jogo()' e adicionamos à lista
+'''
+@app.route('/criar')
+def criar():
+    nome = request.form['nome']
+    categoria = request.form['categoria']
+    console = request.form['console']
+    jogo = Jogo(nome, categoria, console)
+    lista.append(jogo)
+'''
+# também tivemos que tirar a lista de dentro da rota '/inicio' e colocamos fora de rotas (como global),
+    para que a função 'criar()' possa acessa-la
+
+# no final nao rodou, vamos concertar na proxima aula

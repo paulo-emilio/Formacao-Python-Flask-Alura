@@ -1,0 +1,14 @@
+# deu erro na hora de criar um novo jogo pois o método route por padrão só aceita o método get,
+    vamos arrumar isto:
+    @app.route('/criar', methods=['POST', ])
+
+# Para não ficarmos fazendo rerun (ctrl+f5) toda hora, vamos criar um debug no código:
+    app.run(debug=True)
+    # Dessa forma o python reconhece automaticamente que foram feitas mudanças e restarta sozinho
+
+# Melhorando o código:
+    @app.route('/inicio') -> @app.route('/')  # página inicial
+    def ola(): -> def index()  # def index() é padrão
+
+# O '/criar' ainda está bem errado, pois quando enviamos o post, o site continua na página '/criar',
+    e reiniciarmos ela o formulário é enviado novamente, adicionando o mesmo jogo de novo (prox aula)
