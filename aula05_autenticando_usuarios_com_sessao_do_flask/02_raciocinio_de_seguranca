@@ -1,0 +1,3 @@
+               |/novo| <---------------------------+
+                  V                                |
+       Ok <- |Verificação| ->  |/login| <--> |Autenticação|

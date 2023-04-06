@@ -1,0 +1,40 @@
+# Mostrando se o login foi bem ou mal sucedido
+    importamos o session
+        # ele permite que as informações sejam guardadas por mais de um ciclo de request,
+            ele guarda as informações nos cookies do navegador
+        # também importamos o flash, que é usado para mostrar mensagens
+        # código:
+            def autenticar():
+            if 'duasportas' == request.form['senha']:
+                session['usuario_logado'] = request.form['usuario']  # salvando no navegador
+                flash(session['usuario_logado'] + ' logado com sucesso!')
+                return redirect('/')
+            else:
+                flash('Usuário ou Senha Incorretos!')
+                return redirect('/login')
+
+    # Deu erro:
+    RuntimeError: The session is unavailable because no secret key was set.
+    Set the secret_key on the application to something unique and secret.
+        # Por questões de segurança precisamos definir uma chave secreta,
+            para fazer criptografia da senha já que ela ficará salva no navegador
+    # Definindo a chave secreta:
+        Abaixo de 'app = Flask(__name__)':
+            app.secret_key = 'curso_flask'
+
+    # Sem erro, mas não apareceu a mensagem
+        Precisamos alterar o código em 'login.html' pois é lá que deve aparecer a mensagem
+    # Precisa ser colocado um trecho de código html que é bem específico do flask que pegamos direto da documentação
+        Abaixo de '<div class="container">':
+        '''
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul id="messages" class="list-unstyled">
+                {% for message in messages %}
+                    <li class="alert alert-success">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        '''
+

@@ -1,0 +1,4 @@
+@app.route('/logout', methods=['POST'], )
+def logout():
+    session['usuario_logado'] = None  # Define o usuario que o session salvou no navegador como None
+                                      # assim fazendo o logout

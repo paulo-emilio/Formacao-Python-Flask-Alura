@@ -1,0 +1,19 @@
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+# login.html peguei pronto. obs: no formulário já esta dito que o metodo é POST e vai ser enviado para '/autenticar'
+    '<form method="POST" action="/autenticar">'
+
+# Rota autenticar:
+# lembrar que o método também vai usar o POST, então temos que colocar 'methods=['POST', ]'
+'''
+@app.route('/autenticar', methods=['POST', ])
+def autenticar():
+    login = request.form['usuario']
+    senha = request.form['senha']
+    if 'duasportas' == senha:
+        return redirect('/')
+    else:
+        return redirect('/login')
+'''

@@ -1,0 +1,10 @@
+Criando a verificação de login para acessar páginas:
+em:
+    @app.route('/novo')
+    def novo():
+adicionamos:
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        return redirect('/login')
+
+    # SE 'usuario_logado' not in session, ou seja, se não tiver sido guardado na memória ainda
+    # OU session['usuario_logado'] == None, ou seja, já tiver logado e deslogado
