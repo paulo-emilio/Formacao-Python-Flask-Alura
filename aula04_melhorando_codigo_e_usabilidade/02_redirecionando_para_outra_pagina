@@ -1,0 +1,16 @@
+# O '/criar' ainda está bem errado, pois quando enviamos o post, o site continua na página '/criar',
+    e reiniciarmos ela o formulário é enviado novamente, adicionando o mesmo jogo de novo.
+    # A página '/criar' na verdade não deveria ser uma página em si, deveria só passar por ela para enviar
+        o formulário, e depois ir para o inicio
+
+Redirecionando usando o redirect:
+'''
+@app.route('/criar', methods=['POST', ])
+def criar():
+    nome = request.form['nome']
+    categoria = request.form['categoria']
+    console = request.form['console']
+    jogo = Jogo(nome, categoria, console)
+    lista.append(jogo)
+ -> return redirect('/')
+'''

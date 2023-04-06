@@ -1,0 +1,12 @@
+# Removendo código duplicado nas páginas html, para ficar mais fácil se quisermos alterar no futuro
+    criamos a página template.html dentro da pasta 'templates'
+        colocamos o código comum, e adicionamos essa linha onde os códigos são diferentes:
+            {% block conteudo %} {% endblock %}
+
+    nas páginas html apagamos o código que existe em comum, e adicionamos no início:
+        {% extends "template.html"%}
+        {% block conteudo %}
+
+        '''( codigo da página )'''
+
+        {% end block %}  # no final

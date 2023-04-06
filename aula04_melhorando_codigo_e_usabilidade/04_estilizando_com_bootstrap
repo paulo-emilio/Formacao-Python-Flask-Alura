@@ -1,0 +1,11 @@
+Framework bootstrap
+
+# baixar o arquivo do site 'https://getbootstrap.com'
+      extrair, copiar o arquivo bootstrap.css
+          criar nova pasta 'static' (padrão) e colar o arquivo
+
+# Aplicando na página html
+    Adicionar essa linha dentro de <head> abaixo de <title>:
+        <link rel="stylesheet" href="../static/bootstrap.css">
+
+Tivemos que add em 2 páginas, ou seja, código duplicado, vamos melhorar na proxima aula

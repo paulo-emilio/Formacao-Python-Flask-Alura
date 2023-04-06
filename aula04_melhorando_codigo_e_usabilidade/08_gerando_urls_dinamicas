@@ -1,0 +1,7 @@
+Da forma que criamos o caminho para acessar 'bootstrap.css':
+    '<link rel="stylesheet" href="../static/bootstrap.css">'
+    depois que o projeto vai crescendo fica mais complicado de achar os caminhos para arquivos,
+    por isso o flask tem o método url_for() que vai buscar esse arquivo automaticamente,
+        alterando o código:
+        '<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">'
+            # 'static' é a pasta, 'bootstrap' é o nome do arquivo
