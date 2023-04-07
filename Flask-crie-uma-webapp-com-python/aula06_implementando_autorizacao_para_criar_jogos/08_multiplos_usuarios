@@ -1,0 +1,35 @@
+Criamos usuários:
+'''
+class Usuario:
+    def __init__(self, nome, nickname, senha):
+        self.nome = nome
+        self.nickname = nickname
+        self.senha = senha
+
+
+usuario1 = Usuario('Darth', 'darth', 'darth1')
+usuario2 = Usuario('Loki', 'loki', 'loki1')
+usuario3 = Usuario('Gandalf', 'gandalf', 'gandalf1')
+usuarios = {usuario1.nickname: usuario1,
+            usuario2.nickname: usuario2,
+            usuario3.nickname: usuario3}
+'''
+Alteramos o autenticar:
+'''
+@app.route('/autenticar', methods=['POST', ])
+def autenticar():
+    # autenticando nick
+    if request.form['usuario'] in usuarios:  # verificando se o usuário informado está no dicionario
+        usuario = usuarios[request.form['usuario']]  # nickname
+        if request.form['senha'] == usuario.senha:
+            session['usuario_logado'] = usuario.nickname
+            # mensagem
+            flash(usuario.nickname + ' logado com sucesso!')
+            # redirect
+            proxima_pagina = request.form['proxima']
+            return redirect(proxima_pagina)
+    else:
+        # senha incorreta
+        flash('Usuário ou Senha Incorretos!')
+        return redirect(url_for('login'))
+'''

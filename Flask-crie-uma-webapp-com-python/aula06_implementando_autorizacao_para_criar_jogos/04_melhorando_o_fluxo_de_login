@@ -1,0 +1,27 @@
+# Quando tentamos criar um novo jogo e nao estamos logados, o site nos manda pra pagina de login, certo,
+    mas depois que logamos, ele nos envia para página inicial, e nao '/novo'
+
+# Passando através de uma query string a próxima página que deve ser acessada depois do login
+    depois de '/login' no redirect adicionamos a query (?) e usamos a variável proxima=novo,
+        quer dizer que depois de login, a próxima página deve ser '/novo'
+    '''
+    def novo():
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        # não está logado
+        return redirect('/login?proxima=novo')
+    '''
+        # Mas ainda temos que capturar essa informação na página '/login'
+            '''
+            proxima = request.args.get('proxima')  # query que vem de '/novo'
+            return render_template('login.html', proxima=proxima) # proxima=proxima está enviando as informações para
+                                                                  # a página login.html
+            '''
+            # Em login.html, usamos depois de '<form method="POST" action="/autenticar">':
+                '''<input type="hidden" name="proxima", value="{{ proxima }}">'''
+                # tipo=escondido - definindo nome=proxima - pegando o valor que mandamos com o request no .py
+                '''
+                    # esse formulário anterior é um post para a rota '/autenticar'
+                        pegando o formulário em '/autenticar':
+                            '''proxima_pagina = request.form['proxima']'''
+                        definindo o redirect depois de autenticado:
+                            '''return redirect(f'/{proxima_pagina}')

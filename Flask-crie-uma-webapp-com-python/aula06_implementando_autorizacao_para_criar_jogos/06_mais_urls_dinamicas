@@ -1,0 +1,22 @@
+ Ao invés de utilizarmos 'return redirect('/login')' por exemplo, iremos utilizar o url_for():
+    '''return redirect(url_for('login'))'''
+        # 'login' é a função que instancia a página de login
+
+        # return redirect('/login?proxima=novo')
+            muda para:
+                return redirect(url_for('login', proxima=url_for('novo')))
+
+        # return redirect(f'/{proxima_pagina}')
+            muda para:
+                return redirect(proxima_pagina)
+                    # pois já está recebendo a url completa agr, e não só a palavra 'novo'
+
+        # Ná página login.html:
+            # <form method="POST" action="/autenticar">
+                para:
+                    <form method="POST" action="{{ url_for('autenticar') }}">
+
+        # Ná página novo.html:
+            # <form action="/criar" method="post">
+                para:
+                    <form action="{{ url_for('criar') }}" method="post">
