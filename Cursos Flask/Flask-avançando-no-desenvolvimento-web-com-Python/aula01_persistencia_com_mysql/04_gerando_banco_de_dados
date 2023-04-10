@@ -1,0 +1,6 @@
+Criamos um arquivo .py com o código já pronto da criação das tabelas mysql
+instalamos e importamos:
+mysql -> pip3.exe install mysqlclient
+mysql-connect -> pip install mysql-connect-python
+
+
