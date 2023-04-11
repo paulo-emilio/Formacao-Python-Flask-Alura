@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 # Instancia para criar algum jogo que será adicionado na Jogoteca
-class Jogo:
+'''class Jogo:
     def __init__(self, nome, categoria, console):
         self.nome = nome
         self.categoria = categoria
@@ -28,7 +28,7 @@ usuario2 = Usuario('Loki', 'loki', 'loki1')
 usuario3 = Usuario('Gandalf', 'gandalf', 'gandalf1')
 usuarios = {usuario1.nickname: usuario1,
             usuario2.nickname: usuario2,
-            usuario3.nickname: usuario3}
+            usuario3.nickname: usuario3}'''
 
 
 # Definindo inicialização do programa com Flask
@@ -48,7 +48,7 @@ db = SQLAlchemy(app)
 
 
 class Jogos(db.Model):
-    id = db.Column(db.Integer(11), primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer(), primary_key=True, autoincrement=True)
     nome = db.Column(db.String(50), nullable=False)
     categoria = db.Column(db.String(40), nullable=False)
     console = db.Column(db.String(20), nullable=False)
