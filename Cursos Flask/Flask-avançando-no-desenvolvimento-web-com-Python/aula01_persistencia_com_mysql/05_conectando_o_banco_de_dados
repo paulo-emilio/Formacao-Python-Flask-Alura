@@ -1,0 +1,24 @@
+Vamos utilizar um ORM (Object-Relational Mapping)
+Mais especificamente o SQL Alchemy
+    # ele traduz os objetos de Orientação a Objetos Python, para Objetos de Banco de Dados
+    # toolkit de ferramentas
+    # Instalando -> pip install flask-sqlalchemy==2.5.1
+    # importando -> from flask_sqlalchemy import SQLAlchemy
+
+# Instânciando o banco de dados do SQL Alchemy que vai fazer a ponte com nosso BD
+    em jogoteca.py depois de "app = Flask(__name__)":
+        '''db = SQLAlchemy(app)'''
+
+# Conectando com o nosso BD
+    para fazer isso vamos criar uma nova variável dentro das configurações da nossa aplicação
+        Acima da instânciação do SQL Alchemy:
+            app.config['SQLALCHEMY_DATABASE_URI'] = \  # 'SQLALCHEMY_DATABASE_URI' é o nome da variável (padrão)
+                # endereço com as configs do nosso BD -> formato: 'SGBD://usuario:senha@servidor/database'
+                fizemos:
+                '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.format(
+                    SGBD='mysql+mysqlconnector',  # estamos usando o mysql e o conector
+                    usuario=root,
+                    senha=admin,
+                    servidor='localhost',  # 127.0.0.1 reconhecido como localhost
+                    database='jogoteca'
+                    )

@@ -1,0 +1,17 @@
+Criar classes para ser a conexão com as tabelas do BD
+
+# Criando modelo dessa tabela:
+  TABLES['Jogos'] = ('''
+      CREATE TABLE `jogos` (
+      `id` int(11) NOT NULL AUTO_INCREMENT,
+      `nome` varchar(50) NOT NULL,
+      `categoria` varchar(40) NOT NULL,
+      `console` varchar(20) NOT NULL,
+      PRIMARY KEY (`id`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;''')
+
+  Em jogoteca.py:
+      '''
+      class Jogos(db.Model):
+
+      '''

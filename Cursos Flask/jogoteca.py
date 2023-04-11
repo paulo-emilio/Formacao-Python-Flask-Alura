@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
+from flask_sqlalchemy import SQLAlchemy
 
 
 # Instancia para criar algum jogo que será adicionado na Jogoteca
@@ -33,6 +34,36 @@ usuarios = {usuario1.nickname: usuario1,
 # Definindo inicialização do programa com Flask
 app = Flask(__name__)
 app.secret_key = 'curso_flask'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = \
+    '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.format(
+        SGBD='mysql+mysqlconnector',
+        usuario='root',
+        senha='admin',
+        servidor='localhost',
+        database='jogoteca'
+    )
+
+db = SQLAlchemy(app)
+
+
+class Jogos(db.Model):
+    id = db.Column(db.Integer(11), primary_key=True, autoincrement=True)
+    nome = db.Column(db.String(50), nullable=False)
+    categoria = db.Column(db.String(40), nullable=False)
+    console = db.Column(db.String(20), nullable=False)
+
+    def __repr__(self):
+        return '<Name %r>' % self.name
+
+
+class Usuarios(db.Model):
+    nome = db.Column(db.String(20), nullable=False)
+    nickname = db.Column(db.String(8), nullable=False, primary_key=True)
+    senha = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        return '<Name %r>' % self.name
 
 
 # Tela inicial
