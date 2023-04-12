@@ -39,3 +39,6 @@
         if __name__ == '__main__':
         app.run(debug=True)  # debug para ficar sempre atualizado no navegador
         '''
+
+    importando as views:
+        '''from views import *'''

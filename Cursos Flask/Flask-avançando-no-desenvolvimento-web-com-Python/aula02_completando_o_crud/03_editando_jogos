@@ -1,0 +1,21 @@
+Criando as rotas para edição
+# Tela de editar jogos
+@app.route('/editar')
+def editar():
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        # não está logado
+        return redirect(url_for('login', proxima=url_for('editar')))
+    # logado
+    return render_template('editar.html', titulo='Editando Jogo')
+
+
+# Atualizando jogo '/editar' na lista
+@app.route('/atualizar', methods=['POST', ])
+def atualizar():
+    pass
+
+Também criamos a página 'editar.html' e copiamos o código de novo
+    editamos somente sua action que agora posta na url ('atualizar')
+
+Criamos um botão na página inicial para nos enviar para página de edição:
+    <th><a href="{{ url_for('editar') }}">Editar</a></th>

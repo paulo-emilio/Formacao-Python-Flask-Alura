@@ -41,6 +41,24 @@ def criar():
     return redirect(url_for('index'))
 
 
+# Tela de editar jogos
+@app.route('/editar/<int:id>')
+def editar(id):
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        # não está logado
+        return redirect(url_for('login', proxima=url_for('editar')))
+    # logado
+    # query para pegar o objeto 'jogo'
+    jogo = Jogos.query.filter_by(id=id).first()
+    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo)
+
+
+# Atualizando jogo '/editar' na lista
+@app.route('/atualizar', methods=['POST', ])
+def atualizar():
+    pass
+
+
 # Tela de login
 @app.route('/login')
 def login():

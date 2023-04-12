@@ -1,5 +1,3 @@
-from jogoteca import app
-
 SECRET_KEY = 'curso_flask'
 
 SQLALCHEMY_DATABASE_URI = \

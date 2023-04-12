@@ -1,0 +1,21 @@
+em lista.html temos o botão editar:
+    '''<th><a href="{{ url_for('editar') }}">Editar</a></th>'''
+    Vamos passar também a id do jogo para a rota de editar:
+                                                  V
+        '''<th><a href="{{ url_for('editar'), id=jogo.id }}">Editar</a></th>'''
+
+    Recebendo esse id em @app.route('/editar'):
+        '''
+        @app.route('/editar/<int:id>')
+            def editar(id):
+        '''
+        # query para pegar o objeto 'jogo' para poder passar pro editar.html
+            '''jogo = Jogos.query.filter_by(id=id).first()
+               return render_template('editar.html', titulo='Editando Jogo', jogo=jogo)
+            '''
+
+    Pegando em editar.html e definindo o valor base para o input:
+        '''<input type="text" id="nome" name="nome" class="form-control" value="{{ jogo.nome }}">'''
+        '''<input type="text" id="categoria" name="categoria" class="form-control" value="{{ jogo.categoria }}">'''
+        '''<input type="text" id="console" name="console" class="form-control" value="{{ jogo.console }}">'''
+

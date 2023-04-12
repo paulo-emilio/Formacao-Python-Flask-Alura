@@ -35,6 +35,8 @@ app.config.from_pyfile('config.py')
 
 db = SQLAlchemy(app)
 
+from views import *
+
 # Executando o programa
 if __name__ == '__main__':
     app.run(debug=True)  # debug para ficar sempre atualizado no navegador
