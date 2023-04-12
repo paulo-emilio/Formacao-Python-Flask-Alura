@@ -72,12 +72,11 @@ for user in cursor.fetchall():
 # inserindo jogos
 jogos_sql = 'INSERT INTO jogos (nome, categoria, console) VALUES (%s, %s, %s)'
 jogos = [
-    ('Tetris', 'Puzzle', 'Atari'),
-    ('God of War', 'Hack n Slash', 'PS2'),
-    ('Mortal Kombat', 'Luta', 'PS2'),
-    ('Valorant', 'FPS', 'PC'),
-    ('Crash Bandicoot', 'Hack n Slash', 'PS2'),
-    ('Need for Speed', 'Corrida', 'PS2'),
+    ('Super Mario World', 'Plataforma', 'Super Nintendo'),
+    ('Guitar Hero', 'Ritmo', 'PlayStation 2'),
+    ('Red Dead Redemption', 'Aventura', 'Xbox 360'),
+    ('The Last of Us', 'Survival', 'PlayStation 4'),
+    ('Elden Ring', ' RPG', 'Windows'),
 ]
 cursor.executemany(jogos_sql, jogos)
 

@@ -1,2 +1,41 @@
-# Quebramos a aplicação, pois pelo nosso código, precisamos do objeto 'lista' para funcionar tudo
+# Organizando o código:
+    * Criamos os arquivos, 'views.py' para as rotas, 'models.py' para as classes modelos 'Jogos' e 'Usuarios'
+        e 'config.py' para as configurações como a secret_key e a variável da URI para conectar com o BD
+            e fizemos as importações necessárias para cada uma delas
 
+    * Especial:
+        em 'config.py' alteramos de:
+            '''
+            app.secret_key = 'curso_flask'
+            app.config['SQLALCHEMY_DATABASE_URI'] = \
+                '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.format(
+                    SGBD='mysql+mysqlconnector',
+                    usuario='root',
+                    senha='admin',
+                    servidor='localhost',
+                    database='jogoteca'
+                )
+            '''
+        para:
+            '''
+            SECRET_KEY = 'curso_flask'
+
+            SQLALCHEMY_DATABASE_URI = \
+                '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.format(
+                    SGBD='mysql+mysqlconnector',
+                    usuario='root',
+                    senha='admin',
+                    servidor='localhost',
+                    database='jogoteca'
+                )
+            '''
+            Criando essas variáveis
+
+    * Depois em jogoteca.py, pegamos as configurações:
+        '''app.config.from_pyfile('config.py')'''
+
+    * E refizemos o debug
+        '''
+        if __name__ == '__main__':
+        app.run(debug=True)  # debug para ficar sempre atualizado no navegador
+        '''
