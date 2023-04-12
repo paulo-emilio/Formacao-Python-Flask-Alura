@@ -69,6 +69,7 @@ class Usuarios(db.Model):
 # Tela inicial
 @app.route('/')
 def index():
+    lista = Jogos.query.order_by(Jogos.id)  # pegando a lista de jogos do 'prepara_banco.py'
     return render_template('lista.html', titulo='Jogos', jogos=lista)
 
 
@@ -88,8 +89,18 @@ def criar():
     nome = request.form['nome']
     categoria = request.form['categoria']
     console = request.form['console']
-    jogo = Jogo(nome, categoria, console)
-    lista.append(jogo)
+    # conferindo se já existe no BD:
+    jogo = Jogos.query.filter_by(nome=nome).first()
+    if jogo:
+        flash('Jogo já existe na lista!')
+        return redirect(url_for('novo'))
+    # incluindo novo jogo
+    else:
+        novo_jogo = Jogos(nome=nome, categoria=categoria, console=console)
+        # incluindo no bd, instanciado pelo SQLAlchemy
+        db.session.add(novo_jogo)  # db = SQLAlchemy(app)
+        # comitando para o banco
+        db.session.commit()
     return redirect(url_for('index'))
 
 
@@ -104,8 +115,8 @@ def login():
 @app.route('/autenticar', methods=['POST', ])
 def autenticar():
     # autenticando nick
-    if request.form['usuario'] in usuarios:  # verificando se o usuário informado está no dicionario
-        usuario = usuarios[request.form['usuario']]  # nickname
+    usuario = Usuarios.query.filter_by(nickname=request.form['usuario']).first()
+    if usuario:  # verificando se o usuário informado está no dicionario
         if request.form['senha'] == usuario.senha:
             session['usuario_logado'] = usuario.nickname
             # mensagem
@@ -114,7 +125,7 @@ def autenticar():
             proxima_pagina = request.form['proxima']
             return redirect(proxima_pagina)
     else:
-        # senha incorreta
+        # usuário ou senha incorreta
         flash('Usuário ou Senha Incorretos!')
         return redirect(url_for('login'))
 

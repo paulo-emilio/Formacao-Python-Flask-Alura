@@ -28,3 +28,33 @@ usuarios = {usuario1.nickname: usuario1,
             usuario3.nickname: usuario3}'''
 
 # Com isso quebramos a aplicação, pois pelo nosso código, precisamos do onjeto 'lista' para funcionar tudo
+
+    * Adicionamos na rota '/' a seguinte lista pegando a lista de jogos do 'prepara_banco':
+        '''lista = Jogos.query.order_by(Jogos.id)'''
+
+    * Na rota '/autenticar'
+        '''usuario = Usuarios.query.filter_by(nickname=request.form['usuario']).first()'''
+            # se o usuário fornecido no formulário(form['usuario']) estiver na tabela 'Usuarios' no banco de dados,
+                'usuario' criado agora será definido como esse nome, então será 'True', se não, será 'False'
+        e o if virou simplemente '''if usuario:'''
+
+    * Na rota '/criar'
+        # Apagamos:
+            '''
+            jogo = Jogos(nome, categoria, console)
+            lista.append(jogo)
+            '''
+        # conferindo se já existe no BD:
+            jogo = Jogos.query.filter_by(nome=nome).first()  # se jogo True, jogo já existe
+            if jogo:
+                flash('Jogo já existe na lista!')
+                return redirect(url_for('novo'))
+            # se não existe vamos adicionar:
+                    '''
+                    else:
+                        novo_jogo = Jogos(nome=nome, categoria=categoria, console=console)
+                        # incluindo no bd, instanciado pelo SQLAlchemy
+                        db.session.add(novo_jogo)  # db = SQLAlchemy(app)
+                        # comitando para o banco
+                        db.session.commit()
+                    '''
