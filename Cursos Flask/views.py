@@ -46,7 +46,7 @@ def criar():
 def editar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         # não está logado
-        return redirect(url_for('login', proxima=url_for('editar')))
+        return redirect(url_for('login', proxima=url_for('editar', id=id)))
     # logado
     # query para pegar o objeto 'jogo'
     jogo = Jogos.query.filter_by(id=id).first()
@@ -56,7 +56,17 @@ def editar(id):
 # Atualizando jogo '/editar' na lista
 @app.route('/atualizar', methods=['POST', ])
 def atualizar():
-    pass
+    jogo = Jogos.query.filter_by(id=request.form['id']).first()  # guardando o objeto do bd que tem id fornecido
+    # alterando os valoeres
+    jogo.nome = request.form['nome']
+    jogo.categoria = request.form['categoria']
+    jogo.console = request.form['console']
+
+    # adicionando e comitando para o bd pelo SQLAlchemy
+    db.session.add(jogo)
+    db.session.commit()
+
+    return redirect(url_for('index'))
 
 
 # Tela de login

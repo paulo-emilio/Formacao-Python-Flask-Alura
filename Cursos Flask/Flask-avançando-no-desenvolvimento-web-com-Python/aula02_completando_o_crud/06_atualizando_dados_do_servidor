@@ -1,0 +1,19 @@
+Vamos pegar a id do jogo que a página 'editar/<int:id>' está tentado atualizar e fazer uma query no bd
+    e ir atualizando campo por campo
+
+# em 'editar.html':
+    '''<input type="hidden" name="id" value="{{ jogo.id }}">'''
+
+# Recebendo esse input na rota 'atualizar':
+        def atualizar():
+            jogo = Jogos.query.filter_by(id=request.form['id']).first()  # guardando o objeto do bd que tem id fornecido
+            # alterando os valores
+            jogo.nome = request.form['nome']
+            jogo.categoria = request.form['categoria']
+            jogo.console = request.form['console']
+
+            # adicionando e comitando para o bd pelo SQLAlchemy
+            db.session.add(jogo)
+            db.session.commit()
+
+            return redirect(url_for('index'))
