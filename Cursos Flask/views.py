@@ -28,16 +28,21 @@ def criar():
     console = request.form['console']
     # conferindo se já existe no BD:
     jogo = Jogos.query.filter_by(nome=nome).first()
+
     if jogo:
         flash('Jogo já existe na lista!')
         return redirect(url_for('novo'))
+
     # incluindo novo jogo
-    else:
-        novo_jogo = Jogos(nome=nome, categoria=categoria, console=console)
-        # incluindo no bd, instanciado pelo SQLAlchemy
-        db.session.add(novo_jogo)  # db = SQLAlchemy(app)
-        # comitando para o banco
-        db.session.commit()
+    novo_jogo = Jogos(nome=nome, categoria=categoria, console=console)
+    # incluindo no bd, instanciado pelo SQLAlchemy
+    db.session.add(novo_jogo)  # db = SQLAlchemy(app)
+    # comitando para o banco
+    db.session.commit()
+
+    arquivo = request.files['arquivo']
+    arquivo.save(f'uploads/{arquivo.filename}')  # salva na pasta uploads, com o nome do aquivo que está sendo enviado
+
     return redirect(url_for('index'))
 
 
@@ -57,7 +62,7 @@ def editar(id):
 @app.route('/atualizar', methods=['POST', ])
 def atualizar():
     jogo = Jogos.query.filter_by(id=request.form['id']).first()  # guardando o objeto do bd que tem id fornecido
-    # alterando os valoeres
+    # alterando os valores
     jogo.nome = request.form['nome']
     jogo.categoria = request.form['categoria']
     jogo.console = request.form['console']
@@ -66,6 +71,20 @@ def atualizar():
     db.session.add(jogo)
     db.session.commit()
 
+    return redirect(url_for('index'))
+
+
+@app.route('/deletar/<int:id>')
+def deletar(id):
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
+        # não está logado
+        return redirect(url_for('login'))
+
+    # deletando
+    Jogos.query.filter_by(id=id).delete()
+    # commit para o banco
+    db.session.commit()
+    flash('Jogo deletado com sucesso!')
     return redirect(url_for('index'))
 
 

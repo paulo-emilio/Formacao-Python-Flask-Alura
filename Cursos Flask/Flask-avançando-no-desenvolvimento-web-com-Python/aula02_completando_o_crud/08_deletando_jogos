@@ -1,0 +1,18 @@
+Criamos o botão em 'lista.html':
+    '''<a href="{{ url_for('deletar', id=jogo.id) }}">Deletar</a>'''
+
+Criamos a rota deletar:
+@app.route('/deletar/<int:id>')
+'''
+def deletar(id):
+    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+        # não está logado
+        return redirect(url_for('login'))
+    # deletando
+    jogo = Jogos.query.filter_by(id=id).delete()
+    # commit para o banco
+    db.session.add(jogo)
+    db.session.commit()
+    flash('Jogo deletado com sucesso!')
+    return redirect(url_for('index'))
+'''

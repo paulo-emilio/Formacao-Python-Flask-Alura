@@ -1,0 +1,21 @@
+Adicionando um botão para colocar uma imagem:
+    Em novo.html:
+        '''<input type="file" name="arquivo" accept=".jpg">'''
+
+    Na rota criar:
+        '''
+        # pega o arquivo enviado
+        arquivo = request.files['arquivo']
+        # salva na pasta uploads, com o nome do aquivo que está sendo enviado
+        arquivo.save(f'uploads/{arquivo.filename}')
+        '''
+
+    Deu erro pois falta o enctype no formulário:
+    Isso que permite enviar arquivos para nosso servidor
+        Em novo.html:
+        '''
+        <form action="{{ url_for('criar') }}" method="post" enctype="multipart/form-data">
+        '''
+
+    Obs: o modo de salvar o jogo não está bom, pois pode vir nomes iguais
+    criando erros no nosso código, entre outros problemas
