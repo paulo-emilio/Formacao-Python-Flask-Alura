@@ -1,0 +1,10 @@
+Vamos usar JS para que, ao alterar a imagem, ela mude na página automaticamente
+    código pronto ('app.js' & 'jquery.js')
+
+# Importando os scripts em 'template.html':
+    '''
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+    '''
+
+    Mudou!

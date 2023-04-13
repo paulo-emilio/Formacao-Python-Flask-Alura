@@ -1,6 +1,7 @@
-from flask import render_template, request, redirect, session, flash, url_for
-from jogoteca import app, db
+from flask import render_template, request, redirect, session, flash, url_for, send_from_directory
 from models import Jogos, Usuarios
+from jogoteca import app, db
+from helpers import recupera_imagem
 
 
 # Tela inicial
@@ -40,8 +41,10 @@ def criar():
     # comitando para o banco
     db.session.commit()
 
+    # Imagens
     arquivo = request.files['arquivo']
-    arquivo.save(f'uploads/{arquivo.filename}')  # salva na pasta uploads, com o nome do aquivo que está sendo enviado
+    upload_path = app.config['UPLOAD_PATH']
+    arquivo.save(f'{upload_path}/capa{novo_jogo.id}.jpg')
 
     return redirect(url_for('index'))
 
@@ -55,7 +58,8 @@ def editar(id):
     # logado
     # query para pegar o objeto 'jogo'
     jogo = Jogos.query.filter_by(id=id).first()
-    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo)
+    capa_jogo = recupera_imagem(id=id)
+    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo, capa_jogo=capa_jogo)
 
 
 # Atualizando jogo '/editar' na lista
@@ -70,6 +74,11 @@ def atualizar():
     # adicionando e comitando para o bd pelo SQLAlchemy
     db.session.add(jogo)
     db.session.commit()
+
+    # Imagens
+    arquivo = request.files['arquivo']
+    upload_path = app.config['UPLOAD_PATH']
+    arquivo.save(f'{upload_path}/capa{jogo.id}.jpg')
 
     return redirect(url_for('index'))
 
@@ -120,3 +129,10 @@ def logout():
     session['usuario_logado'] = None
     flash('Usuário desconectado!')
     return redirect(url_for('index'))
+
+# Imagem
+@app.route('/uploads/<nome_arquivo>')
+def imagem(nome_arquivo):
+     return send_from_directory('uploads', nome_arquivo)
+
+

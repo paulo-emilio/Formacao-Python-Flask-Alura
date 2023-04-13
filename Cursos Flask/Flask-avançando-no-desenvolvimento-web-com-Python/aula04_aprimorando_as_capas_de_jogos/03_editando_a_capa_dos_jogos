@@ -1,0 +1,29 @@
+Criamos o arquivo 'helpers.py' e criamos a função seguinte:
+passando o id, essa função descobre se tem, e retorna o nome da imagem do jogo
+'''
+def recupera_imagem(id):
+    for nome_arquivo in os.listdir(app.config['UPLOAD_PATH']):
+        if nome_arquivo == f'capa{id}.jpg':
+            return nome_arquivo
+
+        return 'capa_padrao.jpg'
+'''
+
+# na rota editar criamos a variável:
+capa_jogo = recupera_imagem(id=id)
+
+# no editar.html, copiamos o código criado em novo.html:
+'''
+<figure class="img-thumbnail col-md-4">
+          <img class="img-fluid" src="{{ url_for('imagem', nome_arquivo='capa_padrao.jpg') }}">
+          <figcaption>
+            <label class="fileContainer">
+              Mudar Capa
+              <input type="file" name="arquivo" accept=".jpg">
+            </label>
+          </figcaption>
+        </figure>
+'''
+    # Alteramos o nome_arquivo='capa_padrao.jpg', para capa_jogo que é a variável criada na rota editar
+
+Funcionou!

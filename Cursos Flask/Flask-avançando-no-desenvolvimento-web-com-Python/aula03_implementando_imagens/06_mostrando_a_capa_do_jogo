@@ -1,0 +1,34 @@
+# Salvamos a capa em uploads
+
+# Importamos 'send_from_directory' do flask
+
+# Criamos uma rota para a imagem:
+'''
+@app.route('/uploads/<nome_arquivo>')
+def imagem(nome_arquivo):
+     return send_from_directory('uploads', nome_arquivo)
+'''
+
+# Em novo.html depois de abrir o <form:
+    '''
+    <figure>
+          <img src="{{ url_for('imagem', nomearquivo='capa_padrao.jpg') }}">
+          <figcaption>
+            <label>
+              Mudar Capa
+              <input type="file" name="arquivo" accept=".jpg">
+            </label>
+          </figcaption>
+        </figure>
+    '''
+
+A imagem ficou gigante.
+Vamos adicionar mais CSS no projeto (código pronto no arquivo 'app.css')
+# Adicionado em template.html:
+    '''<link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">'''
+
+# Adicionando as classes CSS em 'novo.html':
+    na imagem:
+        <figure class="img-thumbnail col-md-4">
+        <img class="img-fluid"
+        <label class="fileContainer">

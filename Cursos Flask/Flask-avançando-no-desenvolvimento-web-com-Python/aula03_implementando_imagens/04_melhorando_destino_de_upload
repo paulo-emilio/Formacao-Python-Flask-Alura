@@ -1,4 +1,27 @@
 O modo de salvar o jogo não está bom, pois pode vir nomes iguais
     criando erros no nosso código, entre outros problemas
 
-# 
+# pegamos a variável novo_jogo que foi instanciada ao criar um novo jogo
+    e usamos seu id:  '''arquivo.save(f'uploads/capa{novo_jogo.id}.jpg')'''
+
+# também criamos um caminho mais relativo para a pasta 'uploads'
+em config.py criamos a variável:
+import os
+UPLOAD_PATH = os.path.dirname(os.path.abspath(__file__)) + '/uploads'
+sendo que:
+__file__ -> referência ao próprio arquivo
+* os.path.abspath -> caminho absoluto do arquivo, ou seja:
+    'C:\Users\paulo\OneDrive\Documentos\GitHub\Formacoes-Pyhton-Flask-e-Django\Cursos Flask\config.py'
+
+* os.path.dirname -> nome do diretório que o arquivo está:
+    'C:\Users\paulo\OneDrive\Documentos\GitHub\Formacoes-Pyhton-Flask-e-Django\Cursos Flask\'
+
+ + '/uploads':
+    'C:\Users\paulo\OneDrive\Documentos\GitHub\Formacoes-Pyhton-Flask-e-Django\Cursos Flask\/uploads'
+
+# Na rota 'criar' ficou assim:
+'''
+arquivo = request.files['arquivo']
+upload_path = app.config['UPLOAD_PATH']
+arquivo.save(f'{upload_path}/capa{novo_jogo.id}.jpg')
+'''
