@@ -1,0 +1,31 @@
+Ao salvarmos a imagem do jogo, ela fica salva no servidor, mas tbm no cache do navegador.
+Quando o app precisa pegar a imagem novamente, ao invés de pegar a imagem no servidor, ele busca no cache primeiro.
+O problema é que quando substituímos uma imagem por outra, ela substitui no navegador, mas o cache ainda fica
+    tentando buscar a imagem anterior, como elas tem o mesmo nom.
+
+# Por isso vamos fazer com que o navegador sempre busque a imagem do servidor
+    Como: Vamos adicionar um nome único para cada imagem que for inserida
+
+    # views.py:
+        import time
+
+    # na rota atualizar:
+    '''
+    timestamp = time.time()
+    arquivo.save(f'{upload_path}/capa{jogo.id}-{timestamp}.jpg')
+    '''
+    Isso fará com que cada imagem criada seja salva com o nome
+        acrescentando os segundos e milésimos que a imagem foi postada. (ex:capa9-1681494993.5071502)
+
+    # na rota criar:
+    '''
+    timestamp = time.time()
+    arquivo.save(f'{upload_path}/capa{novo_jogo.id}-{timestamp}.jpg')
+    '''
+
+    Também precisamos fazer isso na função recupera_imagem que está em helpers.py:
+        Alteramos o if que estava:
+            if f'capa{id}.png' == nome_arquivo:
+        foi para:
+            if f'capa{id}' in nome_arquivo:
+        já que sempre tera capa+id no nome da imagem

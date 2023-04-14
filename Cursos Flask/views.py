@@ -1,7 +1,8 @@
 from flask import render_template, request, redirect, session, flash, url_for, send_from_directory
 from models import Jogos, Usuarios
 from jogoteca import app, db
-from helpers import recupera_imagem
+from helpers import recupera_imagem, deleta_imagem
+import time
 
 
 # Tela inicial
@@ -44,7 +45,8 @@ def criar():
     # Imagens
     arquivo = request.files['arquivo']
     upload_path = app.config['UPLOAD_PATH']
-    arquivo.save(f'{upload_path}/capa{novo_jogo.id}.jpg')
+    timestamp = time.time()
+    arquivo.save(f'{upload_path}/capa{novo_jogo.id}-{timestamp}.jpg')
 
     return redirect(url_for('index'))
 
@@ -52,7 +54,7 @@ def criar():
 # Tela de editar jogos
 @app.route('/editar/<int:id>')
 def editar(id):
-    if 'usuario_logado' not in session or session['usuario_logado'] == None:
+    if 'usuario_logado' not in session or session['usuario_logado'] is None:
         # não está logado
         return redirect(url_for('login', proxima=url_for('editar', id=id)))
     # logado
@@ -78,7 +80,9 @@ def atualizar():
     # Imagens
     arquivo = request.files['arquivo']
     upload_path = app.config['UPLOAD_PATH']
-    arquivo.save(f'{upload_path}/capa{jogo.id}.jpg')
+    timestamp = time.time()
+    deleta_imagem(jogo.id)  # deleta imagem antiga do servidor
+    arquivo.save(f'{upload_path}/capa{jogo.id}-{timestamp}.jpg')
 
     return redirect(url_for('index'))
 
@@ -130,9 +134,8 @@ def logout():
     flash('Usuário desconectado!')
     return redirect(url_for('index'))
 
+
 # Imagem
 @app.route('/uploads/<nome_arquivo>')
 def imagem(nome_arquivo):
-     return send_from_directory('uploads', nome_arquivo)
-
-
+    return send_from_directory('uploads', nome_arquivo)

@@ -1,0 +1,10 @@
+Adicionando botões
+
+'''
+    <a class="btn btn-primary" href="{{ url_for('login') }}">Login</a>
+    <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+    <a class="btn btn-primary" href="{{ url_for('novo') }}">Novo Jogo</a>
+'''
+
+Adicionamos outros também,  mas o processo é o mesmo
+
