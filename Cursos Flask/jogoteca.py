@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
 
 # Instancia para criar algum jogo que será adicionado na Jogoteca
 '''class Jogo:
@@ -34,6 +35,7 @@ app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
 db = SQLAlchemy(app)
+csrf = CSRFProtect(app)
 
 from views import *
 

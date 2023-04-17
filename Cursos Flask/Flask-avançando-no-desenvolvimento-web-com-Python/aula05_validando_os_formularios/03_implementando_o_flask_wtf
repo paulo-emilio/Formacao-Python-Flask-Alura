@@ -1,1 +1,13 @@
 Vamos fazer com que não seja possível enviar formulários em branco
+'''
+from flask_wtf import FlaskForm
+from wtforms import StringField
+
+class FormularioJogo(FlaskForm):
+    # uma variável para cada categoria do formulário
+    nome = StringField('Nome do Jogo', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    categoria = StringField('Nome do Jogo', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    console = StringField('Nome do Jogo', [validators.DataRequired(), validators.Length(min=1, max=50)])
+    # validators.DataRequired() -> precisa de dados | validators.Length min e max
+    salvar = SubmitField('Salvar')
+'''

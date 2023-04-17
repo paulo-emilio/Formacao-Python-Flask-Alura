@@ -1,0 +1,32 @@
+Na rota editar:
+    '''
+    form = FormularioJogo()
+    form.nome.data = jogo.nome
+    form.categoria.data = jogo.categoria
+    form.console.data = jogo.console
+    '''
+Adicionamos no return o 'form' para enviar pro template:
+return render_template('editar.html', titulo='Editando Jogo', jogo=jogo, capa_jogo=capa_jogo, form=form)
+
+No editar.html:
+Alteramos da forma que o 'novo.html'
+
+No editar temos um input hidden que passava o 'jogo.id', mas não precisamos do
+objeto inteiro mais, então vamos passar somente o id
+
+Na rota atualizar adicionamos o if formulario validado:
+'''if form.validate_on_submit():'''
+    e substituímos os:  'request.form['~~~']'
+    por: 'form.~~~.data'
+
+Tudo pronto, mas ainda não está funcionando, pq o Flask-WTF exige um token de CSRF
+esse token é um número criado em ambos servidor e navegador, para segurança
+e toda vez que enviamos um formulário ele é verificado
+
+Em jogoteca.py:
+    '''from flask_wtf.csrf import CSRFProtect'''
+após a instancição do app:
+    '''csrf = CSRFProtect(app)'''
+
+Em editar.html e novo.html:
+    '''{{ form.csrf_token() }}'''

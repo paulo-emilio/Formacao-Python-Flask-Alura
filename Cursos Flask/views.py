@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, session, flash, url_for, send_from_directory
 from models import Jogos, Usuarios
 from jogoteca import app, db
-from helpers import recupera_imagem, deleta_imagem
+from helpers import recupera_imagem, deleta_imagem, FormularioJogo
 import time
 
 
@@ -19,15 +19,23 @@ def novo():
         # não está logado
         return redirect(url_for('login', proxima=url_for('novo')))
     # logado
-    return render_template('novo.html', titulo='Novo Jogo')
+    form = FormularioJogo()
+    return render_template('novo.html', titulo='Novo Jogo', form=form)
 
 
 # Adionando jogo '/novo' à lista
 @app.route('/criar', methods=['POST', ])
 def criar():
-    nome = request.form['nome']
-    categoria = request.form['categoria']
-    console = request.form['console']
+    # validando o formulário
+    form = FormularioJogo(request.form)
+    if not form.validate_on_submit():  # retorna True ou False
+        return redirect(url_for('novo'))
+
+    # pegando os dados
+    nome = form.nome.data
+    categoria = form.categoria.data
+    console = form.console.data
+
     # conferindo se já existe no BD:
     jogo = Jogos.query.filter_by(nome=nome).first()
 
@@ -60,29 +68,39 @@ def editar(id):
     # logado
     # query para pegar o objeto 'jogo'
     jogo = Jogos.query.filter_by(id=id).first()
+
+    form = FormularioJogo()
+    form.nome.data = jogo.nome
+    form.categoria.data = jogo.categoria
+    form.console.data = jogo.console
+
     capa_jogo = recupera_imagem(id=id)
-    return render_template('editar.html', titulo='Editando Jogo', jogo=jogo, capa_jogo=capa_jogo)
+    return render_template('editar.html', titulo='Editando Jogo', id=id, capa_jogo=capa_jogo, form=form)
 
 
 # Atualizando jogo '/editar' na lista
 @app.route('/atualizar', methods=['POST', ])
 def atualizar():
-    jogo = Jogos.query.filter_by(id=request.form['id']).first()  # guardando o objeto do bd que tem id fornecido
-    # alterando os valores
-    jogo.nome = request.form['nome']
-    jogo.categoria = request.form['categoria']
-    jogo.console = request.form['console']
+    form = FormularioJogo(request.form)
 
-    # adicionando e comitando para o bd pelo SQLAlchemy
-    db.session.add(jogo)
-    db.session.commit()
+    if form.validate_on_submit():
 
-    # Imagens
-    arquivo = request.files['arquivo']
-    upload_path = app.config['UPLOAD_PATH']
-    timestamp = time.time()
-    deleta_imagem(jogo.id)  # deleta imagem antiga do servidor
-    arquivo.save(f'{upload_path}/capa{jogo.id}-{timestamp}.jpg')
+        jogo = Jogos.query.filter_by(id=request.form['id']).first()  # guardando o objeto do bd que tem id fornecido
+        # alterando os valores
+        jogo.nome = form.nome.data
+        jogo.categoria = form.categoria.data
+        jogo.console = form.console.data
+
+        # adicionando e comitando para o bd pelo SQLAlchemy
+        db.session.add(jogo)
+        db.session.commit()
+
+        # Imagens
+        arquivo = request.files['arquivo']
+        upload_path = app.config['UPLOAD_PATH']
+        timestamp = time.time()
+        deleta_imagem(jogo.id)  # deleta imagem antiga do servidor
+        arquivo.save(f'{upload_path}/capa{jogo.id}-{timestamp}.jpg')
 
     return redirect(url_for('index'))
 
