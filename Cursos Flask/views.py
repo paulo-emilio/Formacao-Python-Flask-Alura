@@ -10,12 +10,14 @@ def index():
     lista = Jogos.query.order_by(Jogos.id)
     return render_template('lista.html', titulo='Jogos', jogos=lista)
 
+
 @app.route('/novo')
 def novo():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
         return redirect(url_for('login', proxima=url_for('novo')))
     form = FormularioJogo()
     return render_template('novo.html', titulo='Novo Jogo', form=form)
+
 
 @app.route('/criar', methods=['POST',])
 def criar():
@@ -45,6 +47,7 @@ def criar():
 
     return redirect(url_for('index'))
 
+
 @app.route('/editar/<int:id>')
 def editar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
@@ -56,6 +59,7 @@ def editar(id):
     form.console.data = jogo.console
     capa_jogo = recupera_imagem(id)
     return render_template('editar.html', titulo='Editando Jogo', id=id, capa_jogo=capa_jogo, form=form)
+
 
 @app.route('/atualizar', methods=['POST',])
 def atualizar():
@@ -78,6 +82,7 @@ def atualizar():
 
     return redirect(url_for('index'))
 
+
 @app.route('/deletar/<int:id>')
 def deletar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
@@ -89,11 +94,13 @@ def deletar(id):
 
     return redirect(url_for('index'))
 
+
 @app.route('/login')
 def login():
     proxima = request.args.get('proxima')
     form = FormularioUsuario()
     return render_template('login.html', proxima=proxima, form=form)
+
 
 @app.route('/autenticar', methods=['POST',])
 def autenticar():
@@ -109,11 +116,13 @@ def autenticar():
         flash('Usuário não logado.')
         return redirect(url_for('login'))
 
+
 @app.route('/logout')
 def logout():
     session['usuario_logado'] = None
     flash('Logout efetuado com sucesso!')
     return redirect(url_for('index'))
+
 
 @app.route('/uploads/<nome_arquivo>')
 def imagem(nome_arquivo):
