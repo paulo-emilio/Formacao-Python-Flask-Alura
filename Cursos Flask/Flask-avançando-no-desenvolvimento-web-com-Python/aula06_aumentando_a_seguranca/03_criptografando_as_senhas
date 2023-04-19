@@ -7,3 +7,20 @@ no lugar da senha:
 '''generate_password_hash("paodequeijo01@").decode('utf-8')'''
 
 # obs: tivemos que mudar uma versão de um pacote do flask, o werkzeug para versão 2.0.0
+
+ERRORS
+instanciando o bcrypt
+    '''
+    from flask_bcrypt import Bcrypt
+    bcrypt = Bcrypt(app)
+    '''
+
+também precisamos descriptografar a senha no views_user:
+    '''from flask_bcrypt import check_password_hash'''
+    na rota autenticar:
+    # checando se a senha fornecida no formulário é igual a chave que faz a descriptografia do BD:
+    '''
+    senha = check_password_hash(usuario.senha, form.senha.data)  # retorna True ou False
+    if usuario and senha:
+    '''
+
