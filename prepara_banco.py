@@ -59,9 +59,9 @@ for tabela_nome in TABLES:
 # inserindo usuarios
 usuario_sql = 'INSERT INTO usuarios (nome, nickname, senha) VALUES (%s, %s, %s)'
 usuarios = [
-      ("Bruno Divino", "BD", generate_password_hash("alohomora").decode('utf-8')),
-      ("Camila Ferreira", "Mila", generate_password_hash("paozinho").decode('utf-8')),
-      ("Guilherme Louro", "Cake", generate_password_hash("python_eh_vida").decode('utf-8'))
+      ("Loki", "loki", generate_password_hash("loki1").decode('utf-8')),
+      ("Darth", "darth", generate_password_hash("darth1").decode('utf-8')),
+      ("Gandalf", "gandalf", generate_password_hash("gandalf1").decode('utf-8'))
 ]
 cursor.executemany(usuario_sql, usuarios)
 
@@ -73,12 +73,16 @@ for user in cursor.fetchall():
 # inserindo jogos
 jogos_sql = 'INSERT INTO jogos (nome, categoria, console) VALUES (%s, %s, %s)'
 jogos = [
-      ('Tetris', 'Puzzle', 'Atari'),
-      ('God of War', 'Hack n Slash', 'PS2'),
-      ('Mortal Kombat', 'Luta', 'PS2'),
-      ('Valorant', 'FPS', 'PC'),
-      ('Crash Bandicoot', 'Hack n Slash', 'PS2'),
-      ('Need for Speed', 'Corrida', 'PS2'),
+      ('Super Mario World', 'Plataforma', 'Super Nintendo'),
+      ('Donkey Kong Country', 'Plataforma', 'Super Nintendo'),
+      ('Shadow of the Colossus', 'Aventura', 'Play Station 2'),
+      ('Guitar Hero', 'Musical', 'Play Station 2'),
+      ('Red Dead Redemption', 'Aventura', 'Xbox 360'),
+      ('Dark Souls', 'RPG', 'Xbox 360'),
+      ('The Last of Us', 'Survival horror', 'Play Station 4'),
+      ('Bloodborne', 'RPG', 'Play Station 4'),
+      ('The Witcher', 'RPG', 'Windows'),
+      ('Elden Ring', 'RPG', 'Windows'),
 ]
 cursor.executemany(jogos_sql, jogos)
 
