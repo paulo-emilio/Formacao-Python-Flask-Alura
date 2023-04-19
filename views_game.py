@@ -5,11 +5,14 @@ from helpers import recupera_imagem, deleta_arquivo, FormularioJogo
 import time
 
 
+# Página inicial
 @app.route('/')
 def index():
     lista = Jogos.query.order_by(Jogos.id)
     return render_template('lista.html', titulo='Jogos', jogos=lista)
 
+
+# Página para adicionar novo jogo
 @app.route('/novo')
 def novo():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
@@ -17,7 +20,9 @@ def novo():
     form = FormularioJogo()
     return render_template('novo.html', titulo='Novo Jogo', form=form)
 
-@app.route('/criar', methods=['POST',])
+
+# Adicionando novo jogo ao banco
+@app.route('/criar', methods=['POST', ])
 def criar():
     form = FormularioJogo(request.form)
 
@@ -45,6 +50,8 @@ def criar():
 
     return redirect(url_for('index'))
 
+
+# Página de edição de dados da tabela
 @app.route('/editar/<int:id>')
 def editar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
@@ -57,7 +64,9 @@ def editar(id):
     capa_jogo = recupera_imagem(id)
     return render_template('editar.html', titulo='Editando Jogo', id=id, capa_jogo=capa_jogo, form=form)
 
-@app.route('/atualizar', methods=['POST',])
+
+# Atualizando no banco
+@app.route('/atualizar', methods=['POST', ])
 def atualizar():
     form = FormularioJogo(request.form)
 
@@ -78,6 +87,8 @@ def atualizar():
 
     return redirect(url_for('index'))
 
+
+# Deletando no banco (botão de deletar)
 @app.route('/deletar/<int:id>')
 def deletar(id):
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
@@ -89,6 +100,8 @@ def deletar(id):
 
     return redirect(url_for('index'))
 
+
+# Salvando Imagem
 @app.route('/uploads/<nome_arquivo>')
 def imagem(nome_arquivo):
     return send_from_directory('uploads', nome_arquivo)
