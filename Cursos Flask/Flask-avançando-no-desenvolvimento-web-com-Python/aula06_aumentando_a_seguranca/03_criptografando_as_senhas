@@ -1,0 +1,9 @@
+Vamos utilizar o flask-bcrypt
+
+em prepara_banco.py:
+from flask_bcrypt import generate_password_hash
+
+no lugar da senha:
+'''generate_password_hash("paodequeijo01@").decode('utf-8')'''
+
+# obs: tivemos que mudar uma versão de um pacote do flask, o werkzeug para versão 2.0.0
