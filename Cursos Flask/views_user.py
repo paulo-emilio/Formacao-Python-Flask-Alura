@@ -1,19 +1,15 @@
-from flask import render_template, request, redirect, session, flash, url_for
 from jogoteca import app
+from flask import render_template, request, redirect, session, flash, url_for
 from models import Usuarios
 from helpers import FormularioUsuario
 from flask_bcrypt import check_password_hash
 
-
-# login
 @app.route('/login')
 def login():
     proxima = request.args.get('proxima')
     form = FormularioUsuario()
     return render_template('login.html', proxima=proxima, form=form)
 
-
-# autenticando login
 @app.route('/autenticar', methods=['POST',])
 def autenticar():
     form = FormularioUsuario(request.form)
@@ -28,8 +24,6 @@ def autenticar():
         flash('Usuário não logado.')
         return redirect(url_for('login'))
 
-
-# logout
 @app.route('/logout')
 def logout():
     session['usuario_logado'] = None
